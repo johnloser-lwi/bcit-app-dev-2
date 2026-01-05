@@ -1,0 +1,28 @@
+{
+    "DAWs":[
+        {
+            "price": "300",
+            "name": "Ableton Live",
+            "developer": "Ableton",
+            "description": "a DAW for music production."
+        },
+        {
+            "price": "1000",
+            "name": "ProTools",
+            "developer": "Avid",
+            "description": "a DAW for music and post production."
+        },
+        {
+            "price": "60",
+            "name": "Reaper",
+            "developer": "Justin Frankel",
+            "description": "a DAW for music production and post production."
+        },
+        {
+            "price": "300",
+            "name": "Cubase",
+            "developer": "Steinberg",
+            "description": "a DAW for music and post production."
+        }
+    ]
+}
