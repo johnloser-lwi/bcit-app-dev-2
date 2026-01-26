@@ -1,11 +1,10 @@
+import {useState, useEffect} from 'react';
+
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { Text } from '@rneui/themed';
 
 import ResortDetailContainer from '../components/ResortDetailContainer';
-
-// data file used to mock requests
-import { useEffect, useState } from 'react';
 
 export default function ResortDetailScreen({ route, navigation }) {
   // get the params from the route
@@ -17,27 +16,29 @@ export default function ResortDetailScreen({ route, navigation }) {
   const [dataResult, setDataResult] = useState([]);
 
   // add useEffect for the fetch process
-  useEffect(() => {
-    fetch("https://resortapi.mdia.ca/api/v1/resorts/read.php?id=" + detailId)
+  useEffect(()=>{
+
+    const uri = 'https://resortapi.mdia.ca/api/v1/resorts/read.php?id=' + detailId;
+
+    // console.log('checking:' + uri);
+
+    fetch(uri)
       .then(res => res.json())
       .then(
-        (result) => {
-          setIsLoaded(true);
+        (result)=>{
+          // successful load
           setDataResult(result);
-        },
-        (error) => {
-          setIsLoaded(true);
+          setIsLoaded(true);          
+        },        
+        (error)=>{
+          // some error likely 404
           setError(error);
-        }
-      )
-  }, [])
-
-  // get resort from static data set
-  //const currResort = getResortById(detailId);
+          setIsLoaded(true);
+        });
+  },[]);
 
   return (
     <View style={styles.container}>
-      {/* <ResortDetailContainer currResort={currResort} /> */}
       {displayData(error, isLoaded, dataResult)}
     </View>
   );
