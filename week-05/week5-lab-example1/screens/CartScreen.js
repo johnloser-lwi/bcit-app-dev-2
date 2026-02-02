@@ -1,9 +1,12 @@
 import { StyleSheet, View, FlatList } from 'react-native';
 import { Text, Button, ListItem, } from '@rneui/themed';
 
+import { useCartState } from '../states/CartState';
+
 export default function CartScreen({ navigation }) {
     
     // get the cartState from the library
+    const cartState = useCartState();
 
     const renderProdList = ({ item }) => (
         <ListItem>
@@ -25,20 +28,40 @@ export default function CartScreen({ navigation }) {
                 }}
                 onPress={() => {
                     // remove this item using the global state function                    
+                    cartState.removeCartItem(item.id);
                 }}
             />
         </ListItem>
     );
 
-    
-    return (
-        <View style={styles.container}>
-            <Text h1>Your Cart</Text>
-            <View>
-                <Text>Your cart is currently empty</Text>
+    if (cartState.getCount() > 0) {
+        return (
+            <View style={styles.container}>
+                <Text h1> Your Cart</Text>
+                <FlatList 
+                    data={cartState.getCart()}
+                    renderItem={renderProdList}
+                />
+
+                <View>
+                    <Button 
+                        title="Clear"
+                        onPress={() => cartState.clearCart()}
+                    />
+                </View>
             </View>
-        </View>
-    );
+        );
+    }
+    else {
+        return (
+            <View style={styles.container}>
+                <Text h1>Your Cart</Text>
+                <View>
+                    <Text>Your cart is currently empty</Text>
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

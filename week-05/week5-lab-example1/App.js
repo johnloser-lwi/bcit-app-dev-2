@@ -11,15 +11,34 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductsScreen';
 import CartScreen from './screens/CartScreen';
 
+import { useCartState } from './states/CartState';
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {  
   // get the cartState from the library     
+  const cartState = useCartState();
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerRight: () => (
+              <View style={{paddingRight: 5}}>
+                <Icon 
+                  type='ionicon'
+                  name="cart"
+                />
+                <Badge 
+                  status="primary"
+                  value={cartState.getCount()}
+                  containerStyle={{position: "absolute", top: -10, left: 15}}
+                />
+              </View>
+            )
+          }}
+        >
           <Stack.Screen
             name="Home"
             component={HomeScreen}
