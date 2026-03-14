@@ -5,6 +5,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import HomeScreen from './pages/HomeScreen';
 import ProfileScreen from './pages/PorfileScreen';
 import SettingsScreen from './pages/SettingsScreen';
+import NotificationsScreen from './pages/NotificationsScreen';
 
 const MyTabs = createBottomTabNavigator({
   screens: {
@@ -21,6 +22,14 @@ const MyTabs = createBottomTabNavigator({
       options: {
         tabBarIcon: ({ color, size }) => (
           <MaterialIcons name="person" size={size} color={color} />
+        ),
+      },
+    },
+    Notifications: {
+      screen: NotificationsScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="notifications" size={size} color={color} />
         ),
       },
     },
