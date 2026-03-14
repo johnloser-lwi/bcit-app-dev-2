@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStaticNavigation } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HomeScreen from './pages/HomeScreen';
-import ProfileScreen from './pages/PorfileScreen';
-import SettingsScreen from './pages/SettingsScreen';
-import NotificationsScreen from './pages/NotificationsScreen';
-import OnboardingViewer from './pages/OnboardingViewer';
+import HomeScreen from './src/components/HomeScreen';
+import ProfileScreen from './src/components/PorfileScreen';
+import SettingsScreen from './src/components/SettingsScreen';
+import NotificationsScreen from './src/components/NotificationsScreen';
+import OnboardingViewer from './src/components/OnboardingViewer';
 
 const MyTabs = createBottomTabNavigator({
   screens: {
