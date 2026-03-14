@@ -5,18 +5,23 @@ import OnboardScreen_1 from './os1';
 import OnBoardScreen2 from './os2';
 import OnBoardScreen3 from './os3';
 
+// onDone is called when the user finishes onboarding
 export default function OnboardingViewer({ onDone }) {
   const { width, height } = useWindowDimensions();
+  // tracks which slide is currently visible
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
 
+  // list of slide components rendered side by side
   const slides = [OnboardScreen_1, OnBoardScreen2, OnBoardScreen3];
 
+  // figure out which slide is showing based on how far the user has scrolled
   const handleScroll = (event) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
     setActiveIndex(index);
   };
 
+  // save that onboarding is done, then hand off to App.js
   const finish = async () => {
     try {
       await AsyncStorage.setItem('onboarded', 'true');
@@ -28,6 +33,7 @@ export default function OnboardingViewer({ onDone }) {
 
   return (
     <View style={{ flex: 1 }}>
+      {/* horizontal scroll that snaps to each slide */}
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -44,12 +50,14 @@ export default function OnboardingViewer({ onDone }) {
       </ScrollView>
 
       <View style={styles.footer}>
+        {/* dot indicators — the active one is darker */}
         <View style={styles.dots}>
           {slides.map((_, i) => (
             <View key={i} style={[styles.dot, i === activeIndex && styles.dotActive]} />
           ))}
         </View>
 
+        {/* only show the button on the last slide */}
         {activeIndex === slides.length - 1 && (
           <TouchableOpacity style={styles.button} onPress={finish}>
             <Text style={styles.buttonText}>Get Started</Text>

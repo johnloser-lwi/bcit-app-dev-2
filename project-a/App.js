@@ -10,6 +10,7 @@ import SettingsScreen from './src/components/SettingsScreen';
 import NotificationsScreen from './src/components/NotificationsScreen';
 import OnboardingViewer from './src/components/OnboardingViewer';
 
+// defines the bottom tab navigator with all 4 screens and their icons
 const MyTabs = createBottomTabNavigator({
   screens: {
     Home: {
@@ -47,12 +48,15 @@ const MyTabs = createBottomTabNavigator({
   },
 });
 
+// builds the actual navigator component from the config above
 const Navigation = createStaticNavigation(MyTabs);
 
 export default function App() {
+  // isLoading prevents a flash of the wrong screen while we check storage
   const [isLoading, setIsLoading] = useState(true);
   const [hasOnboarded, setHasOnboarded] = useState(false);
 
+  // on first load, check if the user has already completed onboarding
   useEffect(() => {
     AsyncStorage.getItem('onboarded').then(value => {
       setHasOnboarded(value === 'true');
@@ -60,10 +64,12 @@ export default function App() {
     });
   }, []);
 
+  // don't render anything until the storage check is done
   if (isLoading) return null;
 
   return (
     <SafeAreaProvider>
+      {/* show onboarding on first launch, otherwise go straight to the app */}
       {hasOnboarded
         ? <Navigation />
         : <OnboardingViewer onDone={() => setHasOnboarded(true)} />}

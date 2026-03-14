@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+// key used to save/load the star state in AsyncStorage
 const STORAGE_KEY = 'star';
 
 export default function HomeScreen() {
   const [starred, setStarred] = useState(false);
 
+  // load the saved star state when the screen first mounts
   useEffect(() => {
     const load = async () => {
       try {
@@ -20,6 +22,7 @@ export default function HomeScreen() {
     load();
   }, []);
 
+  // flip the star and save the new value to storage
   const toggleStar = async () => {
     try {
       const next = !starred;
@@ -33,6 +36,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
+      {/* star icon changes appearance based on the starred state */}
       <TouchableOpacity onPress={toggleStar} style={styles.starButton}>
         <MaterialIcons
           name={starred ? 'star' : 'star-border'}
